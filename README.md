@@ -75,3 +75,14 @@ em Ciência da Computação – ICEx – UFMG
 
 - **Gustavo Henrique Pinheiro da Silva:** Ainda da para entrar. Mas não sei se precisa estar com orientador porque um dos formulários é indicando 3 disciplinas para dar o estágio a docência. Imagino eu que se você já tem orientador e já combinou com ele não precise das 3 opções, basta uma. As 3 opções devem ser para quem não tem isso combinado e vai falar com os professores antes
 - **Ronaldo Vieira:** Não precisa ter um "orientador" de estágio em docência não, só se matricular mesmo
+
+### Quanto demora pro formulário de escolha da disciplina chegar?
+
+> Pessoal do Estágio em Docência, já receberam o formulário para escolha da disciplina?
+> Pessoal que já fez, sabe +- quando o Omar manda? 1 semana, 2 semana...
+
+- [11:55, 12/03/2025] Ramon Gonze:
+  - > Demora um bocado. Só espera que uma hora vai chegar. Sim, é desorganizado assim mesmo, smp foi
+  - > As vezes 1 mês depois q começou a aula, ou até mais
+[11:56, 12/03/2025] Paulo José Lage Alvarenga:
+  - > "quanto mais tarde melhor" (pra vocês, não pro professor) :P
