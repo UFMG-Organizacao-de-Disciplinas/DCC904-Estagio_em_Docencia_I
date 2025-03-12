@@ -86,3 +86,10 @@ em Ciência da Computação – ICEx – UFMG
   - > As vezes 1 mês depois q começou a aula, ou até mais
 [11:56, 12/03/2025] Paulo José Lage Alvarenga:
   - > "quanto mais tarde melhor" (pra vocês, não pro professor) :P
+
+## O formulário é enviado individualmente? Por onde?
+
+- **Sandor:**
+  - > Eles costumam mandar o formulário para td mundo na mesma hora ou individual?
+- **Ramon Gonze:**
+  - > Se não me engano é pelo moodle que mandam pra todos os alunos, de uma vez
