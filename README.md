@@ -8,17 +8,17 @@ Os alunos que relacionaram a atividade de Estágio em Docência I ou II na propo
 
 Após alocação das disciplinas os alunos devem entregar o plano de trabalho, pelo Moodle, com a seguinte estrutura:
 
-1) Objetivos: Diga quais são os objetivos do seu estágio em docência específico. Por exemplo, pode ser dar apoio a um professor em uma disciplina, elaborar um material instrucional, etc.
-2) Dados gerais: Caso seja apoio a uma disciplina apresente dados tais como abaixo:
+1. Objetivos: Diga quais são os objetivos do seu estágio em docência específico. Por exemplo, pode ser dar apoio a um professor em uma disciplina, elaborar um material instrucional, etc.
+2. Dados gerais: Caso seja apoio a uma disciplina apresente dados tais como abaixo:
    - Nome e código da disciplina
    - Nome do professor supervisor (regente de turma)
    - Quantidade de alunos matriculados
    - Outras características que julgar relevantes
-3) Atividades previstas: Relacione as atividades planejadas, tais como correção de listas de exercícios, preparação de aulas, aulas a ministrar, elaboração de exercícios, questões e trabalhos práticos, manutenção da planilha de notas, controle de frequência, elaboração de transparências, etc. Distribua as atividades no tempo (cronograma).
-4) Recursos necessários: Relacione o que será necessário para o cumprimento das atividades, tais como equipamentos áudio-visual, laboratórios, etc.
-5) Resultados esperados: Diga o que você espera alcançar como resultados ao final do período, tanto em termos pessoais quanto para a disciplina.
-6) Material bibliográfico a ser utilizado
-7) Assinaturas: De acordo do supervisor da disciplina e do aluno.
+3. Atividades previstas: Relacione as atividades planejadas, tais como correção de listas de exercícios, preparação de aulas, aulas a ministrar, elaboração de exercícios, questões e trabalhos práticos, manutenção da planilha de notas, controle de frequência, elaboração de transparências, etc. Distribua as atividades no tempo (cronograma).
+4. Recursos necessários: Relacione o que será necessário para o cumprimento das atividades, tais como equipamentos áudio-visual, laboratórios, etc.
+5. Resultados esperados: Diga o que você espera alcançar como resultados ao final do período, tanto em termos pessoais quanto para a disciplina.
+6. Material bibliográfico a ser utilizado
+7. Assinaturas: De acordo do supervisor da disciplina e do aluno.
 
 Ao final do semestre o aluno deve entregar um relatório do trabalho para auto-avaliação no Moodle.
 
@@ -35,7 +35,8 @@ Não é necessário que o professor assine o documento. (Os professores serão c
 - Resolução 041/2010 - Câmara Departamental do DCC [Link][Link_Res2010] [PDF][PDF_Res2010]
 - Resolução 007/2009 - Colegiado do PPGCC [Link][Link_Res2009] [PDF][PDF_Res2009]
 
-[Link_Res2010]: <https://www.dcc.ufmg.br/dcc/sites/default/files/public/resolucao/R_2010_041.pdf>
+[Link_Res2010]: https://www.dcc.ufmg.br/dcc/sites/default/files/public/resolucao/R_2010_041.pdf
+
 [PDF_Res2010]: <>
 [Link_Res2009]: <https://www.dcc.ufmg.br/pos/alunos/downloads/resolucoes/007-2009.pdf>
 [PDF_Res2009]: <Files\Resoluções\007-2009.pdf>
@@ -84,7 +85,7 @@ em Ciência da Computação – ICEx – UFMG
 - [11:55, 12/03/2025] Ramon Gonze:
   - > Demora um bocado. Só espera que uma hora vai chegar. Sim, é desorganizado assim mesmo, smp foi
   - > As vezes 1 mês depois q começou a aula, ou até mais
-[11:56, 12/03/2025] Paulo José Lage Alvarenga:
+    > [11:56, 12/03/2025] Paulo José Lage Alvarenga:
   - > "quanto mais tarde melhor" (pra vocês, não pro professor) :P
 
 ## O formulário é enviado individualmente? Por onde?
@@ -93,3 +94,7 @@ em Ciência da Computação – ICEx – UFMG
   - > Eles costumam mandar o formulário para td mundo na mesma hora ou individual?
 - **Ramon Gonze:**
   - > Se não me engano é pelo moodle que mandam pra todos os alunos, de uma vez
+
+## 2025/2
+
+Os professores responsáveis foram Gisele Lobo Pappa e Erickson. O semestre tendo começado 11/08/2025, o formulário foi enviado no dia 14/08/2025.
