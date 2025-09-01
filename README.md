@@ -1,8 +1,12 @@
 # DCC904-Estagio_em_Docencia_I
 
+## Meu orientador não me responde, o que fazer?
+
+- Veja quais aulas ele ministra e o aguarde sair da sala.
+
 ## Informações [site do PPGCC][Link_PPGCC]
 
-[Link_PPGCC]: https://ppgcc.dcc.ufmg.br/informacoes-para-alunos/#:~:text=Exame%20de%20qualifica%C3%A7%C3%A3o-,Est%C3%A1gio%20em%20Doc%C3%AAncia,-Os%20alunos%20que
+[Link_PPGCC]: https://ppgcc.dcc.ufmg.br/sanfona-page/estagio-em-docencia/
 
 Os alunos que relacionaram a atividade de Estágio em Docência I ou II na proposta de matrícula devem entregar o formulário de inscrição na atividade na Secretaria do PPGCC, com anuência do orientador.
 
