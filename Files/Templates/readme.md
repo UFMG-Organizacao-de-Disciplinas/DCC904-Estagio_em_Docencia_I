@@ -1,0 +1,201 @@
+# [Templates no Overleaf](https://www.overleaf.com/read/hcpjcgzdsjmr#9882c3)
+
+```LaTeX
+\documentclass[12pt, a4paper]{article}
+
+% Encoding and language
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{hyperref}
+\usepackage{verbatim} % habilita o ambiente comment
+\usepackage{indentfirst} % Fazer recuo do primeiro parágrafo
+\usepackage{titling} % Reduzir a distância do Título ao topo
+\setlength{\droptitle}{-10em} % ajusta a distância do topo
+
+\title{\textbf{Estágio em Docência \\ Proposta de Trabalho}}
+\author{<Nome Completo do Aluno>}
+\date{\today}
+
+\begin{document}
+
+\begin{comment}
+
+## Moodle
+
+- Enviar a proposta de trabalho no formato PDF pelo Moodle com o nome `<NomeDoAluno>.pdf`
+- Ao enviar a proposta, o aluno deve também encaminhar uma mensagem ao coordenador da disciplina por e-mail, incluindo o professor responsável pela disciplina em cópia, de modo a informá-lo da submissão da proposta. A proposta de trabalho será avaliada pelo coordenador da disciplina, compondo a nota final da disciplina ED I/II.
+
+===
+
+## Diretrizes Gerais:
+
+4. Proposta de trabalho: é definida uma data para que o estagiário encaminhe uma proposta de trabalho ao coordenador da disciplina, em que conste também o tipo de atividade a ser conduzida, em comum acordo com o professor responsável pela turma à qual foi alocado.
+
+---
+
+A proposta de trabalho deverá ser previamente acertada com o professor responsável pela turma à qual o estagiário foi alocado, e submetida no Moodle da disciplina em um arquivo PDF (usar o nome NomeCompletoDoAluno.pdf).
+
+A proposta deve conter os seguintes itens:
+
+1. Identificação: Título, Disciplina, Professor responsável pela turma
+2. Sobre a Disciplina: Descrição da forma de condução da disciplina adotada pelo professor responsável. Ementa e programa da disciplina. Bibliografia adotada. Formas de avaliação.
+3. Atividades: Indicação das atividades e tarefas que ficarão sob a responsabilidade do estagiário.
+4. Cronograma: Cronograma de aulas e avaliações, indicando a participação do estagiário ao longo do tempo.
+
+Ao enviar a proposta, o aluno deve também encaminhar uma mensagem ao coordenador da disciplina por e-mail, incluindo o professor responsável pela disciplina em cópia, de modo a informá-lo da submissão da proposta.
+
+A proposta de trabalho será avaliada pelo coordenador da disciplina, compondo a nota final da disciplina ED I/II.
+
+---
+
+### Critérios de Avaliação
+
+A avaliação será feita considerando o planejamento e as atividades realizadas ao longo do semestre. Os critérios são os seguintes:
+
+- Proposta de trabalho: 50 pontos (coordenador da disciplina ED)
+  - Conhecimento da disciplina apoiada
+  - Planejamento das atividades
+  - Atendimento ao conteúdo previsto
+\end{comment}
+
+\maketitle
+
+\section{Sobre a Disciplina} \label{sec:disciplina}
+
+% 1. Identificação: Título, Disciplina, Professor responsável pela turma
+
+\textbf{Disciplina:} <Nome da Disciplina>
+
+\textbf{Horários:} <Dia e Hora das Aulas>
+
+\textbf{Professor(a):} <Nome do Professor>
+
+\subsection{Condução pelo professor} \label{subsec:conducao}
+
+% 2. Sobre a Disciplina: Descrição da forma de condução da disciplina adotada pelos professores responsáveis. Ementa e programa da disciplina. Bibliografia adotada. Formas de avaliação.
+
+<Inserir um texto descrevendo a condução pretendida pelo professor (?)>
+
+\subsection{Ementa e Programa da Disciplina} \label{subsec:ementa_e_programa}
+
+<Copiar detalhes relevantes presentes na Ementa da disciplina>
+
+\begin{itemize}
+    \item \textbf{Curso:}
+    \item \textbf{Classificação:}
+    \item \textbf{Créditos:}
+    \item \textbf{Carga Horária:}
+    \item \textbf{Requisitos:}
+    \item \textbf{Objetivos:}
+\end{itemize}
+
+\subsubsection{Ementa} \label{subsubsec:ementa}
+
+<Inserir ementa: basicamente um conjunto de palavras-chaves de conteúdos que serão aprendidos na disciplinas>
+
+\subsubsection{Programa} \label{subsubsec:programa}
+
+<Inserir Programa: A ementa, porém mais descritiva>
+
+\subsection{Bibliografia} \label{subsec:bibliografia}
+
+% Eu gostaria de adicionar isso daqui como se fossem as Referências Bibliográficas, mas ainda não pensei numa forma boa de fazê-lo.
+
+% Eu recomendaria criar um `.bib` com todas as referências, citá-los no texto, copiar do PDF gerado para poder ter a formatação bonitinha, e então colar aqui no itemize.
+
+% Pessoalmente gosto dos links para os materiais, sinto que ajuda a quem for ler a encontrar o que deseja (porém talvez leve para arquivos piratas... não sei quão prudente seria essa abordagem.
+
+Bibliografia Básica:
+
+\begin{itemize}
+    \item <Inserir bibliografia básica>
+\end{itemize}
+
+Bibliografia Complementar:
+
+\begin{itemize}
+    \item <Inserir bibliografia complementar>
+\end{itemize}
+
+\subsection{Formas de Avaliação} \label{subsec:avaliacoes}
+
+<Inserir os pesos para as pontuações distribuídas pelo professor ao longo do semestre>
+
+% $$NF = 0.1 \cdot Freq + 0.2 P_1 + 0.2 P_2 + TP_1 + TP_2$$
+
+\section{Atividades} \label{sec:atividades}
+
+% 3. Atividades: Indicação das atividades e tarefas que ficarão sob a responsabilidade do estagiário.
+
+<Inserir atividades e tarefas que serão realizadas pelo estagiário>
+
+\begin{enumerate}
+    \item <Conduzir disciplina à distância;>
+    \item <Construir disciplinas;>
+    \item <Corrigir avaliações;>
+    \item <Corrigir exercícios;>
+    \item <Ministrar aulas;>
+    \item <Preparar material didático.>
+\end{enumerate}
+
+\section{Cronograma} \label{sec:cronograma}
+
+% 4. Cronograma: Cronograma de aulas e avaliações, indicando a participação do estagiário ao longo do tempo.
+
+<Inserir o cronograma da disciplina em paralelo com as atribuições do estagiário>
+
+\begin{table}[htbp] \centering \caption{Tabela de Atividades} \label{tab:atividades}
+    \begin{tabular}{|c|l|l|} \hline
+        \textbf{Data} & \textbf{Atividade/Aula} & \textbf{Participação do Estagiário} \\ \hline
+        XX/XX & <Aula 1> & <Descrever atividade> \\ \hline
+        XX/XX & <Avaliação 1> & <Descrever participação> \\ \hline
+        XX/XX & <Aula 2> & <Descrever atividade> \\ \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \caption{Cronograma}
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+        \textbf{Aula} & \textbf{Data} & \textbf{Conteúdo} & \textbf{Atividades} \\ \hline
+        01 & ter. 12/08 & Introdução & ~ \\ \hline
+        02 & qui. 14/08 & Conceitos Basicos & ~ \\ \hline
+        -- & ter. 19/08 & DCC Week & ~ \\ \hline
+        -- & qui. 21/08 & DCC Week & ~ \\ \hline
+        03 & ter. 26/08 & Modelo ER: Conceitos & ~ \\ \hline
+        04 & qui. 28/08 & Modelo ER: Extensões & ~ \\ \hline
+        05 & ter. 02/09 & Modelo ER: Exercícios & EX1 \\ \hline
+        06 & qui. 04/09 & Modelo Relacional: Conceitos & ~ \\ \hline
+        07 & ter. 09/09 & Modelo Relacional: Restrições & ~ \\ \hline
+        08 & qui. 11/09 & Modelo Relacional: Exercícios & EX2 \\ \hline
+        09 & ter. 16/09 & Revisão & ~ \\ \hline
+        10 & qui. 18/09 & **Prova 1:** Conceitos, Modelagem & ~ \\ \hline
+        11 & ter. 23/09 & Álgebra Relacional: Operações Unárias & ~ \\ \hline
+        12 & qui. 25/09 & Álgebra Relacional: Operações Binárias & ~ \\ \hline
+        13 & ter. 30/09 & Álgebra Relacional: Exercícios & EX3 \\ \hline
+        14 & qui. 02/10 & SQL: DQL & ~ \\ \hline
+        15 & ter. 07/10 & SQL: DDL+DML & ~ \\ \hline
+        16 & qui. 09/10 & SQL: Tutorial & > TP1 \\ \hline
+        17 & ter. 14/10 & SQL: Exercícios & EX4 \\ \hline
+        18 & qui. 16/10 & Tópicos: NoSQL & ~ \\ \hline
+        19 & ter. 21/10 & Revisão & ~ \\ \hline
+        20 & qui. 23/10 & **Prova 2:** Álgebra, SQL & < TP1 \\ \hline
+        21 & ter. 28/10 & Projeto: Mapeamento & > TP2 \\ \hline
+        22 & qui. 30/10 & Projeto: Normalização & ~ \\ \hline
+        23 & ter. 04/11 & Projeto: Exercícios & EX5 \\ \hline
+        24 & qui. 06/11 & Tópicos: EDA & ~ \\ \hline
+        25 & ter. 11/11 & Revisão & ~ \\ \hline
+        26 & qui. 13/11 & **Prova 3:** Projeto, Tópicos & ~ \\ \hline
+        27 & ter. 18/11 & TP2: Desenvolvimento (extraclasse) & ~ \\ \hline
+        -- & qui. 20/11 & Feriado & ~ \\ \hline
+        28 & ter. 25/11 & TP2: Apresentação & < TP2 \\ \hline
+        29 & qui. 27/11 & TP2: Apresentação & ~ \\ \hline
+        30 & ter. 02/12 & **Prova Substitutiva** & ~ \\ \hline
+        -- & qui. 04/12 & **Exame Especial** & ~ \\ \hline
+    \end{tabular}
+\end{table}
+
+\end{document}
+```
