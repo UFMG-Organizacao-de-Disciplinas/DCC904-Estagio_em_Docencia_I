@@ -1,0 +1,2303 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>09-algebra-relacional</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="09-algebra-relacional_files/libs/clipboard/clipboard.min.js"></script>
+<script src="09-algebra-relacional_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="09-algebra-relacional_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="09-algebra-relacional_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="09-algebra-relacional_files/libs/quarto-html/popper.min.js"></script>
+<script src="09-algebra-relacional_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="09-algebra-relacional_files/libs/quarto-html/anchor.min.js"></script>
+<link href="09-algebra-relacional_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="09-algebra-relacional_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="09-algebra-relacional_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="09-algebra-relacional_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="09-algebra-relacional_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">09-algebra-relacional</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="álgebra-relacional" class="level1">
+<h1>Álgebra Relacional</h1>
+<ul>
+<li>Universidade Federal de Minas Gerais</li>
+<li>Introdução a Banco de Dados</li>
+<li>Rodrygo L. T. Santos</li>
+<li><a href="mailto:rodrygo@dcc.ufmg.br" class="email">rodrygo@dcc.ufmg.br</a></li>
+</ul>
+<section id="linguagens-de-consulta" class="level2">
+<h2 class="anchored" data-anchor-id="linguagens-de-consulta">Linguagens de consulta</h2>
+<ul>
+<li>Permitem manipulação e recuperação de dados
+<ul>
+<li>Propósito específico (vs.&nbsp;linguagens de programação)</li>
+<li>Suportam acesso fácil e eficiente a dados</li>
+</ul></li>
+<li>O modelo relacional suporta linguagens poderosas
+<ul>
+<li>Forte fundamentação teórica baseada em lógica</li>
+<li>Permitem otimizações</li>
+</ul></li>
+</ul>
+<hr>
+<ul>
+<li>Duas linguagens matemáticas formam a base para implementações de linguagens de consulta (e.g., SQL)
+<ul>
+<li><strong>Álgebra relacional:</strong> predominantemente imperativa, útil para representar planos de execução</li>
+<li><strong>Cálculo relacional:</strong> predominantemente declarativa, permite descrever o que recuperar (em vez de como)</li>
+</ul></li>
+</ul>
+<section id="álgebra-vs.-cálculo-relacional" class="level3">
+<h3 class="anchored">Álgebra vs.&nbsp;Cálculo relacional</h3>
+<ul>
+<li><h2 id="álgebra" class="anchored" data-anchor-id="álgebra-vs.-cálculo-relacional">Álgebra</h2>
+<pre><code>&gt; Retorne nome e telefone de livrarias que vendem o livro X</code></pre>
+<ul>
+<li><p>Junte as relações livraria e livro pelo identificador da livraria</p></li>
+<li><p>Selecione da junção tuplas correspondentes ao livro X</p></li>
+<li><p>Projete o resultado da seleção para manter somente os atributos nome e telefone da livraria</p></li>
+</ul></li>
+</ul>
+<hr>
+<ul>
+<li><h2 id="cálculo-relacional" class="anchored">Cálculo relacional</h2>
+<pre><code>&gt; Retorne nome e telefone de livrarias que vendem o livro X</code></pre>
+<ul>
+<li><p>Obtenha o nome e telefone</p></li>
+<li><p>De livrarias</p></li>
+<li><p>Para as quais exista um livro cujo identificador remeta à livraria e cujo título seja X</p></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="álgebra-relacional-1" class="level2">
+<h2 class="anchored" data-anchor-id="álgebra-relacional-1">Álgebra relacional</h2>
+<ul>
+<li><strong>Operações unárias</strong>
+<ul>
+<li>Seleção (<span class="math inline">\(\sigma\)</span>)</li>
+<li>Projeção (<span class="math inline">\(\pi\)</span>)</li>
+<li>Renomeação (<span class="math inline">\(\rho\)</span>)</li>
+</ul></li>
+<li><strong>Operações binárias</strong>
+<ul>
+<li>Aditivas
+<ul>
+<li>União (<span class="math inline">\(\cup\)</span>)</li>
+<li>Interseção (<span class="math inline">\(\cap\)</span>)</li>
+<li>Diferença (<span class="math inline">\(-\)</span>)</li>
+</ul></li>
+<li>Multiplicativas
+<ul>
+<li>Produto cartesiano (<span class="math inline">\(\times\)</span>)</li>
+<li>Junção (<span class="math inline">\(\bowtie\)</span>)</li>
+<li>Divisão (<span class="math inline">\(\div\)</span>)</li>
+</ul></li>
+</ul></li>
+</ul>
+<section id="operações-unárias" class="level3">
+<h3 class="anchored" data-anchor-id="operações-unárias">Operações Unárias</h3>
+<section id="seleção-sigma" class="level4">
+<h4 class="anchored" data-anchor-id="seleção-sigma">Seleção (<span class="math inline">\(\sigma\)</span>)</h4>
+<ul>
+<li>Recupera as tuplas de uma relação <span class="math inline">\(R\)</span> que satisfazem uma determinada condição lógica [<span class="math inline">\(cond\)</span>]
+<ul>
+<li>Notação: <span class="math inline">\(\sigma_{[cond]}(R)\)</span></li>
+</ul></li>
+<li>Exemplo:
+<ul>
+<li><span class="math inline">\(\sigma_{(Dept = 28 \wedge Salário &gt; 600) \lor (Dept = 21)}(Empregado)\)</span></li>
+</ul></li>
+</ul>
+<hr>
+<ul>
+<li><span class="math inline">\(\sigma_{(Dept = 28 \wedge Salário &gt; 600) \lor (Dept = 21)}(Empregado)\)</span></li>
+</ul>
+<p><strong>Tabela:</strong> Empregado</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+<th style="text-align: center;">✗/✓</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">✗</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">092</td>
+<td style="text-align: center;">R Silva</td>
+<td style="text-align: center;">480</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">R Pinto</td>
+<td style="text-align: center;">390</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">✗</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">121</td>
+<td style="text-align: center;">V Simão</td>
+<td style="text-align: center;">905</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">✗</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<ul>
+<li><span class="math inline">\(\sigma_{(Dept = 28 \wedge Salário &gt; 600) \lor (Dept = 21)}(Empregado)\)</span></li>
+</ul>
+<p><strong>Tabela:</strong> Empregado</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+<th style="text-align: center;">✗/✓</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">R Pinto</td>
+<td style="text-align: center;">390</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">121</td>
+<td style="text-align: center;">V Simão</td>
+<td style="text-align: center;">905</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">✓</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="projeção-pi" class="level4">
+<h4 class="anchored" data-anchor-id="projeção-pi">Projeção (<span class="math inline">\(\pi\)</span>)</h4>
+<ul>
+<li>Projeta as tuplas de uma relação <span class="math inline">\(R\)</span> sobre um determinado conjunto de atributos [<span class="math inline">\(atrib\)</span>]
+<ul>
+<li>Notação: <span class="math inline">\(\pi_{[atrib]}(R)\)</span></li>
+</ul></li>
+<li>Exemplos:
+<ul>
+<li><span class="math inline">\(\pi_{Nome, Salário}(Empregado)\)</span></li>
+<li><span class="math inline">\(\pi_{Dept}(Empregado)\)</span></li>
+</ul></li>
+</ul>
+<hr>
+<ul>
+<li><span class="math inline">\(\pi_{Nome, Salário}(Empregado)\)</span></li>
+</ul>
+<p><strong>Tabela:</strong> Empregado</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">ID ✗</th>
+<th style="text-align: center;">Nome ✓</th>
+<th style="text-align: center;">Salário ✓</th>
+<th style="text-align: center;">Dept ✗</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">092</td>
+<td style="text-align: center;">R Silva</td>
+<td style="text-align: center;">480</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">R Pinto</td>
+<td style="text-align: center;">390</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">121</td>
+<td style="text-align: center;">V Simão</td>
+<td style="text-align: center;">905</td>
+<td style="text-align: center;">28</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>Tabela:</strong> Empregado</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Nome ✓</th>
+<th style="text-align: center;">Salário ✓</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">R Silva</td>
+<td style="text-align: center;">480</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">R Pinto</td>
+<td style="text-align: center;">390</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">V Simão</td>
+<td style="text-align: center;">905</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<ul>
+<li><span class="math inline">\(\pi_{Dept}(Empregado)\)</span></li>
+</ul>
+<p><strong>Tabela:</strong> Empregado</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">ID ✗</th>
+<th style="text-align: center;">Nome ✗</th>
+<th style="text-align: center;">Salário ✗</th>
+<th style="text-align: center;">Dept ✓</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">092</td>
+<td style="text-align: center;">R Silva</td>
+<td style="text-align: center;">480</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">R Pinto</td>
+<td style="text-align: center;">390</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">121</td>
+<td style="text-align: center;">V Simão</td>
+<td style="text-align: center;">905</td>
+<td style="text-align: center;">28</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<ul>
+<li><span class="math inline">\(\pi_{Dept}(Empregado)\)</span></li>
+</ul>
+<p><strong>Tabela:</strong> Empregado</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Dept ✓</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">28</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>25</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>21</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>28</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p>Modelo relacional não permite tuplas duplicadas</p>
+</blockquote>
+<hr>
+<ul>
+<li><span class="math inline">\(\pi_{Dept}(Empregado)\)</span></li>
+</ul>
+<p><strong>Tabela:</strong> Empregado</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Dept ✓</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">28</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="renomeação-rho" class="level4">
+<h4 class="anchored" data-anchor-id="renomeação-rho">Renomeação (<span class="math inline">\(\rho\)</span>)</h4>
+<ul>
+<li>Cria um novo esquema <span class="math inline">\(S(A_1, \dots, A_n)\)</span> para a relação <span class="math inline">\(R\)</span>
+<ul>
+<li>Notação 1: <span class="math inline">\(\rho_{S(A_1, \dots, A_n)}(R)\)</span></li>
+<li>Notação 2: <span class="math inline">\(S(A_1, \dots, A_n) \gets R\)</span></li>
+</ul></li>
+<li>Exemplo:
+<ul>
+<li><span class="math inline">\(\rho_{Funcionário(ID, Nome, Renda, Dept)}(Empregado)\)</span></li>
+</ul></li>
+</ul>
+<hr>
+<ul>
+<li><span class="math inline">\(\rho_{Funcionário(ID, Nome, Renda, Dept)}(Empregado)\)</span></li>
+</ul>
+<p><strong>Tabela:</strong> <em>Empregado</em></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">092</td>
+<td style="text-align: center;">R Silva</td>
+<td style="text-align: center;">480</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">R Pinto</td>
+<td style="text-align: center;">390</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">121</td>
+<td style="text-align: center;">V Simão</td>
+<td style="text-align: center;">905</td>
+<td style="text-align: center;">28</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>Tabela:</strong> <del>Empregado</del> <strong>Funcionário</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">092</td>
+<td style="text-align: center;">R Silva</td>
+<td style="text-align: center;">480</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">R Pinto</td>
+<td style="text-align: center;">390</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">121</td>
+<td style="text-align: center;">V Simão</td>
+<td style="text-align: center;">905</td>
+<td style="text-align: center;">28</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="sequência-de-operações" class="level3">
+<h3 class="anchored" data-anchor-id="sequência-de-operações">Sequência de operações</h3>
+<ul>
+<li>Várias operações podem ser combinadas para formar uma expressão da álgebra relacional
+<ul>
+<li><span class="math inline">\(\pi_{Nome, Salário}(\sigma_{Dept = 21} Empregado)\)</span></li>
+</ul></li>
+<li>Considerações importantes
+<ul>
+<li>A ordem das operações importa</li>
+<li>Relações temporárias podem ser úteis</li>
+</ul></li>
+</ul>
+</section>
+<section id="ordenação-de-operações" class="level3">
+<h3 class="anchored" data-anchor-id="ordenação-de-operações">Ordenação de operações</h3>
+<p>✗✓</p>
+<ul>
+<li>Nem todas as ordenações são factíveis
+<ul>
+<li><span class="math inline">\(\pi_{Nome, Salário}(\sigma_{Dept = 21}(Empregado))\)</span> ✓</li>
+<li><span class="math inline">\(\sigma_{Dept = 21}(\pi_{Nome, Salária}(Empregado))\)</span> ✗</li>
+</ul></li>
+<li>Certas ordenações promovem eficiência
+<ul>
+<li>Otimização via seleção e projeção precoces (menos dados trafegam para a operação seguinte)</li>
+</ul></li>
+</ul>
+</section>
+<section id="relações-temporárias" class="level3">
+<h3 class="anchored" data-anchor-id="relações-temporárias">Relações temporárias</h3>
+<ul>
+<li>Certas consultas podem ser complexas
+<ul>
+<li><span class="math inline">\(S \gets \pi_{Nome, Salário}(\sigma_{Dept = 21}(Empregado))\)</span></li>
+</ul></li>
+<li>Relações temporárias facilitam a abstração
+<ul>
+<li><span class="math inline">\(T \gets \sigma_{Dept = 21}(Empregado)\)</span></li>
+<li><span class="math inline">\(S \gets \pi_{Nome, Salário}(T)\)</span></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="operações-aditivas" class="level2">
+<h2 class="anchored" data-anchor-id="operações-aditivas">Operações Aditivas</h2>
+<section id="compatibilidade-de-tipos" class="level3">
+<h3 class="anchored" data-anchor-id="compatibilidade-de-tipos">Compatibilidade de tipos</h3>
+<ul>
+<li>Dois esquemas <span class="math inline">\(R(A_1, A_2, \dots, A_n)\)</span> e <span class="math inline">\(S(B_1, B_2, \dots, B_n)\)</span> são compatíveis para operações aditivas se
+<ul>
+<li><span class="math inline">\(grau(R) = grau(S)\)</span> e</li>
+<li><span class="math inline">\(dom(A_i) = dom(B_i) \forall i\)</span></li>
+</ul></li>
+<li><strong>Observação:</strong> a correspondência de nomes de atributos não é necessária, apenas a de seus domínios</li>
+</ul>
+</section>
+<section id="união-cup" class="level3">
+<h3 class="anchored" data-anchor-id="união-cup">União (<span class="math inline">\(\cup\)</span>)</h3>
+<ul>
+<li>Dadas duas relações compatíveis <span class="math inline">\(R\)</span> e <span class="math inline">\(S\)</span>, retorna tuplas contidas em ao menos uma das duas relações</li>
+</ul>
+<p><span class="math inline">\(R \cup S\)</span></p>
+<p>[Imagem: Diagrama de Venn mostrando a união de dois conjuntos R e S]</p>
+<hr>
+<p>Secretário <span class="math inline">\(\cup\)</span> Engenheiro</p>
+<p><strong>Tabela:</strong> Secretário</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>089</strong></td>
+<td style="text-align: center;"><strong>C Melo</strong></td>
+<td style="text-align: center;"><strong>520</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabela:</strong> Engenheiro</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>089</strong></td>
+<td style="text-align: center;"><strong>C Melo</strong></td>
+<td style="text-align: center;"><strong>520</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">092</td>
+<td style="text-align: center;">R Silva</td>
+<td style="text-align: center;">480</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">R Pinto</td>
+<td style="text-align: center;">390</td>
+<td style="text-align: center;">21</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p>Modelo relacional não permite tuplas duplicadas</p>
+</blockquote>
+<hr>
+<p>Secretário <span class="math inline">\(\cup\)</span> Engenheiro</p>
+<p><strong>Tabela:</strong> Secretário <span class="math inline">\(\cup\)</span> Engenheiro</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">092</td>
+<td style="text-align: center;">R Silva</td>
+<td style="text-align: center;">480</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">R Pinto</td>
+<td style="text-align: center;">390</td>
+<td style="text-align: center;">21</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="interseção-cap" class="level3">
+<h3 class="anchored" data-anchor-id="interseção-cap">Interseção (<span class="math inline">\(\cap\)</span>)</h3>
+<ul>
+<li>Dadas duas relações compatíveis <span class="math inline">\(R\)</span> e <span class="math inline">\(S\)</span>, retorna tuplas contidas em ambas as relações</li>
+</ul>
+<p><span class="math inline">\(R \cap S\)</span></p>
+<p>[Imagem: Diagrama de Venn mostrando a interseção de dois conjuntos R e S]</p>
+<hr>
+<p>Secretário <span class="math inline">\(\cap\)</span> Engenheiro</p>
+<p><strong>Tabela:</strong> Secretário</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabela:</strong> Engenheiro</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">092</td>
+<td style="text-align: center;">R Silva</td>
+<td style="text-align: center;">480</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">R Pinto</td>
+<td style="text-align: center;">390</td>
+<td style="text-align: center;">21</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Secretário <span class="math inline">\(\cap\)</span> Engenheiro</p>
+<p><strong>Tabela:</strong> Secretário <span class="math inline">\(\cap\)</span> Engenheiro</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="diferença--" class="level3">
+<h3 class="anchored" data-anchor-id="diferença--">Diferença (<span class="math inline">\(-\)</span>)</h3>
+<ul>
+<li>Dadas duas relações compatíveis <span class="math inline">\(R\)</span> e <span class="math inline">\(S\)</span>, retorna tuplas contidas em <span class="math inline">\(R\)</span> mas não em <span class="math inline">\(S\)</span></li>
+</ul>
+<p><span class="math inline">\(R - S\)</span></p>
+<p>[Imagem: Diagrama de Venn mostrando a diferença entre dois conjuntos <span class="math inline">\(R\)</span> e <span class="math inline">\(S\)</span> (<span class="math inline">\(R\)</span> menos <span class="math inline">\(S\)</span>)]</p>
+<hr>
+<p>Secretário <span class="math inline">\(-\)</span> Engenheiro</p>
+<p><strong>Tabela:</strong> Secretário</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabela:</strong> Engenheiro</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">092</td>
+<td style="text-align: center;">R Silva</td>
+<td style="text-align: center;">480</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">R Pinto</td>
+<td style="text-align: center;">390</td>
+<td style="text-align: center;">21</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Secretário <span class="math inline">\(-\)</span> Engenheiro</p>
+<p><strong>Tabela:</strong> Secretário <span class="math inline">\(-\)</span> Engenheiro</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Engenheiro <span class="math inline">\(-\)</span> Secretário</p>
+<p><strong>Tabela:</strong> Secretário</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabela:</strong> Engenheiro</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">092</td>
+<td style="text-align: center;">R Silva</td>
+<td style="text-align: center;">480</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">R Pinto</td>
+<td style="text-align: center;">390</td>
+<td style="text-align: center;">21</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Engenheiro <span class="math inline">\(-\)</span> Secretário</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">092</td>
+<td style="text-align: center;">R Silva</td>
+<td style="text-align: center;">480</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">R Pinto</td>
+<td style="text-align: center;">390</td>
+<td style="text-align: center;">21</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="operações-multiplicativas" class="level2">
+<h2 class="anchored" data-anchor-id="operações-multiplicativas">Operações Multiplicativas</h2>
+<section id="álgebra-relacional-2" class="level3">
+<h3 class="anchored" data-anchor-id="álgebra-relacional-2">Álgebra relacional (2)</h3>
+<ul>
+<li>Operações unárias
+<ul>
+<li>Seleção (<span class="math inline">\(\sigma\)</span>)</li>
+<li>Projeção (<span class="math inline">\(\pi\)</span>)</li>
+<li>Renomeação (<span class="math inline">\(\rho\)</span>)</li>
+</ul></li>
+<li>Operações binárias
+<ul>
+<li>Aditivas
+<ul>
+<li>União (<span class="math inline">\(\cup\)</span>)</li>
+<li>Interseção (<span class="math inline">\(\cap\)</span>)</li>
+<li>Diferença (<span class="math inline">\(-\)</span>)</li>
+</ul></li>
+<li>Multiplicativas
+<ul>
+<li>Prod. cartesiano (<span class="math inline">\(\times\)</span>)</li>
+<li>Junção (<span class="math inline">\(\bowtie\)</span>)</li>
+<li>Divisão (<span class="math inline">\(\div\)</span>)</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="operações-aditivas-vs.-multiplicativas" class="level3">
+<h3 class="anchored" data-anchor-id="operações-aditivas-vs.-multiplicativas">Operações aditivas vs.&nbsp;multiplicativas</h3>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Operações aditivas</strong>
+<ul>
+<li>União (<span class="math inline">\(\cup\)</span>)</li>
+<li>Interseção (<span class="math inline">\(\cap\)</span>)</li>
+<li>Diferença (<span class="math inline">\(-\)</span>)</li>
+</ul></li>
+<li><strong>Esquema preservado!</strong></li>
+</ul>
+<hr>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Operações multiplicativas</strong>
+<ul>
+<li>Prod. cartesiano (<span class="math inline">\(\times\)</span>)</li>
+<li>Junção (<span class="math inline">\(\bowtie\)</span>)</li>
+<li>Divisão (<span class="math inline">\(\div\)</span>)</li>
+</ul></li>
+<li><strong>Esquema alterado!</strong></li>
+</ul>
+</section>
+<section id="produto-cartesiano-times" class="level3">
+<h3 class="anchored" data-anchor-id="produto-cartesiano-times">Produto cartesiano (<span class="math inline">\(\times\)</span>)</h3>
+<ul>
+<li>Dadas duas relações <span class="math inline">\(R\)</span> e <span class="math inline">\(S\)</span> quaisquer, combina cada tupla de <span class="math inline">\(R\)</span> com cada tupla de <span class="math inline">\(S\)</span>
+<ul>
+<li>Notação: <span class="math inline">\(R \times S\)</span></li>
+</ul></li>
+<li>Características
+<ul>
+<li><span class="math inline">\(|R \times S| = |R||S|\)</span></li>
+<li><span class="math inline">\(grau(R \times S) = grau(R) + grau(S)\)</span></li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>Tabela:</strong> Empregado</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>ID</strong></th>
+<th style="text-align: center;"><strong>Nome</strong></th>
+<th style="text-align: center;"><strong>Salário</strong></th>
+<th style="text-align: center;"><strong>Dept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabela:</strong> Departamento</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">ID</th>
+<th style="text-align: center;">Nome</th>
+<th style="text-align: center;">Ramal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>[Imagem: diagrama representando o produto cartesiano entre as tabelas Empregado e Departamento]</p>
+<hr>
+<p><strong>Tabela:</strong> Empregado E <span class="math inline">\(\times\)</span> Departamento D</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">E.ID</th>
+<th style="text-align: center;">E.Nome</th>
+<th style="text-align: center;">E.Salário</th>
+<th style="text-align: center;">E.Dept</th>
+<th style="text-align: center;">D.ID</th>
+<th style="text-align: center;">D.Nome</th>
+<th style="text-align: center;">D.Ramal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+</tbody>
+</table>
+<section id="tuplas-espúrias" class="level4">
+<h4 class="anchored" data-anchor-id="tuplas-espúrias">Tuplas espúrias</h4>
+<ul>
+<li>Produto cartesiano combina todas as tuplas de <span class="math inline">\(R\)</span> e <span class="math inline">\(S\)</span>
+<ul>
+<li>Algumas combinações formarão tuplas válidas</li>
+<li>Outras formarão tuplas espúrias</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>Tabela:</strong> Empregado E <span class="math inline">\(\times\)</span> Departamento D</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 17%">
+<col style="width: 14%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 21%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">E.ID</th>
+<th style="text-align: center;">E.Nome</th>
+<th style="text-align: center;">E.Salário</th>
+<th style="text-align: center;">E.Dept</th>
+<th style="text-align: center;">D.ID</th>
+<th style="text-align: center;">D.Nome</th>
+<th style="text-align: center;">D.Ramal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>032</strong></td>
+<td style="text-align: center;"><strong>J Silva</strong></td>
+<td style="text-align: center;"><strong>380</strong></td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;"><strong>25</strong></td>
+<td style="text-align: center;"><strong>Financeiro</strong></td>
+<td style="text-align: center;"><strong>143</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>032</strong></td>
+<td style="text-align: center;"><strong>J Silva</strong></td>
+<td style="text-align: center;"><strong>380</strong></td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+<td style="text-align: center;"><strong>Técnico</strong></td>
+<td style="text-align: center;"><strong>144</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>074</strong></td>
+<td style="text-align: center;"><strong>M Reis</strong></td>
+<td style="text-align: center;"><strong>400</strong></td>
+<td style="text-align: center;"><strong>25</strong></td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;"><strong>Pessoal</strong></td>
+<td style="text-align: center;"><strong>142</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>074</strong></td>
+<td style="text-align: center;"><strong>M Reis</strong></td>
+<td style="text-align: center;"><strong>400</strong></td>
+<td style="text-align: center;"><strong>25</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+<td style="text-align: center;"><strong>Técnico</strong></td>
+<td style="text-align: center;"><strong>144</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>089</strong></td>
+<td style="text-align: center;"><strong>C Melo</strong></td>
+<td style="text-align: center;"><strong>520</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;"><strong>Pessoal</strong></td>
+<td style="text-align: center;"><strong>142</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>089</strong></td>
+<td style="text-align: center;"><strong>C Melo</strong></td>
+<td style="text-align: center;"><strong>520</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+<td style="text-align: center;"><strong>25</strong></td>
+<td style="text-align: center;"><strong>Financeiro</strong></td>
+<td style="text-align: center;"><strong>143</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>Tabela:</strong> Empregado E <span class="math inline">\(\times\)</span> Departamento D</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">E.ID</th>
+<th style="text-align: center;">E.Nome</th>
+<th style="text-align: center;">E.Salário</th>
+<th style="text-align: center;">E.Dept</th>
+<th style="text-align: center;">D.ID</th>
+<th style="text-align: center;">D.Nome</th>
+<th style="text-align: center;">D.Ramal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;"><strong>25</strong></td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;"><strong>25</strong></td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;"><strong>25</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;"><strong>28</strong></td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;"><strong>28</strong></td>
+<td style="text-align: center;"><strong>25</strong></td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<ul>
+<li>Produto cartesiano combina todas as tuplas de <span class="math inline">\(R\)</span> e <span class="math inline">\(S\)</span>
+<ul>
+<li>Algumas combinações formarão tuplas válidas</li>
+<li>Outras formarão tuplas espúrias!</li>
+</ul></li>
+<li>Tuplas espúrias eliminadas via seleção
+<ul>
+<li>Condição define quais tuplas são válidas</li>
+<li>Tipicamente baseada na chave estrangeira</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>Tabela:</strong> Empregado E <span class="math inline">\(\times\)</span> Departamento D</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">E.ID</th>
+<th style="text-align: center;">E.Nome</th>
+<th style="text-align: center;">E.Salário</th>
+<th style="text-align: center;">E.Dept</th>
+<th style="text-align: center;">D.ID</th>
+<th style="text-align: center;">D.Nome</th>
+<th style="text-align: center;">D.Ramal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;"><strong>25</strong></td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;"><strong>25</strong></td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;"><strong>25</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;"><strong>28</strong></td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;"><strong>28</strong></td>
+<td style="text-align: center;"><strong>25</strong></td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<ul>
+<li><span class="math inline">\(\sigma_{E.Dept = D.ID}(Empregado E \times Departamento D)\)</span></li>
+</ul>
+<p><strong>Tabela:</strong> Empregado E <span class="math inline">\(\times\)</span> Departamento D</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">E.ID</th>
+<th style="text-align: center;">E.Nome</th>
+<th style="text-align: center;">E.Salário</th>
+<th style="text-align: center;">E.Dept</th>
+<th style="text-align: center;">D.ID</th>
+<th style="text-align: center;">D.Nome</th>
+<th style="text-align: center;">D.Ramal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;"><strong>25</strong></td>
+<td style="text-align: center;"><strong>25</strong></td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;"><strong>28</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>Tabela:</strong> Empregado E <span class="math inline">\(\times\)</span> Departamento D</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">E.ID</th>
+<th style="text-align: center;">E.Nome</th>
+<th style="text-align: center;">E.Salário</th>
+<th style="text-align: center;">E.Dept</th>
+<th style="text-align: center;">D.ID</th>
+<th style="text-align: center;">D.Nome</th>
+<th style="text-align: center;">D.Ramal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">032</td>
+<td style="text-align: center;">J Silva</td>
+<td style="text-align: center;">380</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">Pessoal</td>
+<td style="text-align: center;">142</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">074</td>
+<td style="text-align: center;">M Reis</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">Financeiro</td>
+<td style="text-align: center;">143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">089</td>
+<td style="text-align: center;">C Melo</td>
+<td style="text-align: center;">520</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">Técnico</td>
+<td style="text-align: center;">144</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
