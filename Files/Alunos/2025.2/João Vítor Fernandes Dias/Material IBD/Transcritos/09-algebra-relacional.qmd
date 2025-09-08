@@ -1,8 +1,27 @@
 ---
-title: "09-algebra-relacional"
+title: "Álgebra Relacional"
+author: "João Vítor Fernandes Dias"
+date: "07/09/2025"
+# toc: true
+number-sections: true
+# highlight-style: pygments
 format:
-  html:
-    code-fold: true
+  revealjs:
+    # preview-links: auto
+    # chalkboard: 
+    #   buttons: false
+    # theme: solarized
+    slide-number: true
+    # incremental: true
+    # scrollable: true
+    # transition: fade
+    theme: dark #beige, blood, dark, default, dracula, league, moon, night, serif, simple, sky, solarized
+  # pdf: 
+  #   toc: true
+  #   number-sections: true
+  # html:
+  #   code-fold: true
+# bibliography: references.bib
 ---
 
 # Álgebra Relacional
@@ -11,6 +30,10 @@ format:
 - Introdução a Banco de Dados
 - Rodrygo L. T. Santos
 - <rodrygo@dcc.ufmg.br>
+
+::: {.notes}
+Speaker notes go here.
+:::
 
 ## Linguagens de consulta
 
