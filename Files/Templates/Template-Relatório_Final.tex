@@ -1,0 +1,139 @@
+% # Template LaTeX para Relatório Final de Estágio Docência
+
+% ## Preâmbulo do documento
+
+% ### Importações
+
+\documentclass[a4paper,12pt]{article}
+\usepackage[brazil]{babel}
+\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+\usepackage[margin=1in,letterpaper]{geometry} % decreases margins
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}  % improve math presentation
+\usepackage{cite} % takes care of citations
+\usepackage{graphicx} % takes care of graphic including machinery
+\usepackage{longtable}
+\usepackage{tabularx} % extra features for tabular environment
+%\usepackage[latin1]{inputenc}
+%\usepackage[T1]{fontenc}
+
+%  ### Configurações do documento
+
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=blue,        % color of internal links
+	citecolor=blue,        % color of links to bibliography
+	filecolor=magenta,     % color of file links
+	urlcolor=blue         
+}
+
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+
+% ## Início do documento
+
+\begin{document}
+
+\title{Relatório Final\\Estágio Docência -- \{Ano\}/\{Semestre\} \vspace{5cm} \\ \{Nome da Disciplina\} (\{Código da Disciplina\})  \vspace{10cm}}
+%\subtitle{Introdução a Banco de Dados}
+\author{\{Nome do Aluno\} \\ Professores Responsáveis: Dr. \{Nome do Professor 1\}, \\ \{Nome do Professor 2\}}
+\vspace{10cm}
+
+\date{Data de Entrega: \today}
+
+\maketitle
+
+\newpage
+
+\section{Disciplina}
+
+\{Descrição da disciplina na qual o estágio foi realizado, incluindo objetivos, programa e bibliografia.\}
+
+A Disciplina \{Nome da Disciplina\} é uma matéria de \{número de créditos por extenso (número de créditos em algarismos)\} créditos \{obrigatória/opcional\} para os estudantes de \{graduação/pós graduação\} do \{nome do departamento\} da \{nome da instituição\}. Essa disciplina tem como proposta \{descrever os objetivos da disciplina de forma sucinta\}.
+
+% \{Exemplo:\}
+% Projeto e Análise de Algoritmos (PAA) é uma matéria de quatro (4) créditos obrigatória para os estudantes de pós graduação do Departamento de Ciência da Computação da UFMG (DCC - UFMG). Essa disciplina tem como proposta  ensinar os alunos a compreender e analisar algoritmos, levando em conta aspectos como finitude, corretude, tempo de execução, etc. Além disso, o curso busca trazer a intuição sobre como projetar algoritmo eficientes, apresentando as principais estratégias de construção de algoritmos.
+
+\subsection{Programa}
+
+\begin{enumerate}
+  \item \{Enumeração dos tópicos abordados na disciplina.\}
+        \begin{itemize}
+          \item \{Sinta-se livre para usar subitens, se necessário.\}
+        \end{itemize}
+  \item \{E também adicionar outros tópicos dados em sequência.\}
+        % \item Análise de complexidade de algoritmos
+        % \begin{itemize}
+        %     \item Invariantes;
+        %     \item Complexidade;
+        %     \item Notação assintótica;
+        %     \item Recursividade;
+        %     \item Equação de recorrência;
+        %     \item Análise probabilística;
+        %     \item Algoritmos randomizados;
+        %     \item Análise amortizada.
+        % \end{itemize}
+        % \item Algoritmos em grafos
+        % \begin{itemize}
+        %     \item Busca em Profundidade;
+        %     \item Busca em Largura;
+        %     \item Árvore geradora mínima;
+        %     \item Caminho mínimo;
+        %     \item Fluxos e cortes.
+        % \end{itemize}
+        % \item Paradigmas de projeto de algoritmos
+        % \begin{itemize}
+        %     \item Indução;
+        %     \item Recursividade;
+        %     \item Tentativa e erro;
+        %     \item Divisão e conquista;
+        %     \item Guloso;
+        %     \item Programação dinâmica.
+        % \end{itemize}
+        % \item Teoria de NP-Completude e Algoritmos aproximados
+        % \begin{itemize}
+        %     \item Classes P, NP, NP-difícil, NP-Completo;
+        %     \item Teorema de Cook-Levin;
+        %     \item Reduções de problemas NP-completo (exemplos: clique, cobertura por conjuntos, conjunto independente, conjunto dominante);
+        %     \item Algoritmos de aproximação.
+        % \end{itemize}
+\end{enumerate}
+
+\subsection{Bibliografia}
+
+\begin{itemize}
+  \item \{Citação das principais referências bibliográficas utilizadas na disciplina. Usando formato usual de referência bibliográfica. Não há necessidade de usar um arquivo \textit{.bib} ou algo do tipo.\}
+        % \item \{Exemplos abaixo. Remover estes exemplos e colocar as referências reais.\}
+        % \item Algorithms in C, Parts 1-5 (Bundle) : Fundamentals, Data Structures, Sorting, Searching, and Graph Algorithms. Robert Sedgewick. Addison-Wesley Longman Publishing Co., Harlow, UK, 2001.
+        % \item Introduction to algorithms: a creative approach. Udi Manber. Addison- Wesley, 1989.
+\end{itemize}
+
+\section{Atividades Conduzidas}
+
+\noindent As seguintes atividades foram conduzidas pelo estagiário docente:
+
+\begin{itemize}
+  \item \{Liste objetivamente as atividades realizadas durante o estágio.\}
+        % \item \{Exemplos abaixo. Remover estes exemplos e colocar as atividades reais.\}
+        % \item Correção da prova do módulo 1 (e, se necessário, correção da prova do módulo 4);
+        % \item Confecção e correção dos trabalhos práticos dos módulos 2 e 3;
+        % \item Correção da lista teórica do módulo 4;
+        % \item Atendimento aos alunos no auxílio de dúvidas enviadas no Teams da turma;
+        % \item Monitorias para tirar dúvidas sobre questões.
+\end{itemize}
+
+\section{Resultados Obtidos}
+
+\{Descrição pessoal da experiência do estágio, incluindo desafios enfrentados, aprendizados adquiridos, experiências que sentiu falta e apreciação geral da atividade. Não parece haver problema em ser um texto mais informal e pessoal.\}
+
+% Exemplos:
+% A atividade de estágio a docência foi um desafio para mim, principalmente porque comecei a trabalhar esse semestre. Balancear o novo emprego e o estágio foi complicado, mas acredito que tenha realizado um bom trabalho. Fiquei bastante satisfeita com as tarefas que conduzi na disciplina com apoio dos professores responsáveis. 
+% A parte mais desafiadora foram as monitorias síncronas, onde precisava resolver as dúvidas dos alunos ao vivo, sem poder pesquisar sobre, ou mesmo me lembrar de conteúdos específicos de alguma parte dos módulos. De toda maneira, sempre sonhei em ser professora, então ter a janela para exercer essa função foi um sonho.
+% A única coisa que sinto que faltou foi dar uma aula expositiva. Infelizmente, meu horário de trabalho batia com o horário da aula, então não pude exercer essa tarefa, mas desde o princípio os professores se mostraram abertos a ideia e me deram todo o apoio necessário. Foi ótimo trabalhar com ambos os docentes.
+
+\section{Sugestões para Futuras Ofertas da Disciplina}
+
+\{Sugestões sinceras baseadas na experiência do estágio, incluindo comentários de alunos, se aplicável.\}
+
+% Exemplo: Minha primeira sugestão para as ofertas futuras é que sigam utilizando o URI para os trabalhos práticos (TPs), mas que sejam no máximo 5 atividades por TP. Além disso, os alunos sugeriram um prova final com toda a matéria que pudesse substituir a nota de uma das outras quatro provas. No atual sistema remoto e com o semestre tão apertado, acho que séria impossível, mas talvez em situações futuras isso possa se tornar viável.
+
+\end{document}
