@@ -1,2 +1,8 @@
 /Files/Alunos/2025.2/João Vítor Fernandes Dias/Material IBD/Transcritos/09-algebra-relacional_files
 /Files/Alunos/2025.2/João Vítor Fernandes Dias/Material IBD/Transcritos/example/example_files
+*.aux
+*.log
+*.fdb_latexmk
+*.fls
+*.out
+*.gz
