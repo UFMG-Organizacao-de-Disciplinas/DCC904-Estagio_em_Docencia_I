@@ -4,10 +4,10 @@
 
 % ### Importações
 
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper, 12pt]{article}
 \usepackage[brazil]{babel}
 \usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
-\usepackage[margin=1in,letterpaper]{geometry} % decreases margins
+\usepackage[margin=1in, letterpaper]{geometry} % decreases margins
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}  % improve math presentation
 \usepackage{cite} % takes care of citations
@@ -29,13 +29,23 @@
 
 \newcommand{\blue}[1]{\textcolor{blue}{#1}}
 
+% ### Variáveis personalizáveis
+
+\def\ano{\{Ano\}}
+\def\semestre{\{Semestre\}}
+\def\nomeDisciplina{\{Nome da Disciplina\}}
+\def\codigoDisciplina{\{Código da Disciplina\}}
+\def\nomeAluno{\{Nome do Aluno\}}
+\def\nomeProfessorUm{\{Nome do Professor 1\}}
+\def\nomeProfessorDois{\{Nome do Professor 2\}}
+
 % ## Início do documento
 
 \begin{document}
 
-\title{Relatório Final\\Estágio Docência -- \{Ano\}/\{Semestre\} \vspace{5cm} \\ \{Nome da Disciplina\} (\{Código da Disciplina\})  \vspace{10cm}}
+\title{Relatório Final\\Estágio Docência -- \ano/\semestre \vspace{5cm} \\ \nomeDisciplina (\codigoDisciplina)  \vspace{10cm}}
 %\subtitle{Introdução a Banco de Dados}
-\author{\{Nome do Aluno\} \\ Professores Responsáveis: Dr. \{Nome do Professor 1\}, \\ \{Nome do Professor 2\}}
+\author{\nomeAluno \\ Professores Responsáveis: Dr. \nomeProfessorUm, \\ \nomeProfessorDois}
 \vspace{10cm}
 
 \date{Data de Entrega: \today}
