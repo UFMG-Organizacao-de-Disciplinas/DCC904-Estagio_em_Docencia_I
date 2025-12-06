@@ -1,0 +1,102 @@
+% # Template LaTeX para Relatório Final de Estágio Docência
+
+% ## Preâmbulo do documento
+
+% ### Importações
+
+\documentclass[a4paper, 12pt]{article}
+\usepackage[brazil]{babel}
+\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+\usepackage[margin=1in, letterpaper]{geometry} % decreases margins
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}  % improve math presentation
+\usepackage{cite} % takes care of citations
+\usepackage{graphicx} % takes care of graphic including machinery
+\usepackage{indentfirst} % Fazer recuo do primeiro parágrafo
+\usepackage{longtable}
+\usepackage{tabularx} % extra features for tabular environment
+\usepackage{titling} % Reduzir a distância do Título ao topo
+\setlength{\droptitle}{-10em} % ajusta a distância do topo
+
+\usepackage{verbatim} % habilita o ambiente comment
+
+%  ### Configurações do documento
+
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=blue,        % color of internal links
+	citecolor=blue,        % color of links to bibliography
+	filecolor=magenta,     % color of file links
+	urlcolor=blue         
+}
+
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+
+% ### Variáveis personalizáveis
+
+\def\ano{2025}
+\def\semestre{2}
+\def\nomeDisciplina{Introdução à Banco de Dados}
+\def\codigoDisciplina{DCC011}
+\def\creditosDisciplina{4}
+\def\nomeAluno{João Vítor Fernandes Dias}
+\def\nomeProfessorUm{Rodrygo Luis Teodoro Santos}
+% \def\nomeProfessorDois{\{Nome do Professor 2\}}
+
+\title{Relatório Final\\Estágio Docência -- \ano/\semestre \vspace{5cm} \\ \nomeDisciplina\ -- \codigoDisciplina \vspace{10cm}}
+% \subtitle{Introdução a Banco de Dados}
+\author{Estagiário: \nomeAluno \\ Professor Responsável: \nomeProfessorUm}
+\vspace{10cm}
+
+\date{Data de Entrega: \today}
+
+% ## Início do documento
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\section{Disciplina}
+
+A disciplina na qual o estágio foi realizado se trata de \nomeDisciplina\ (\codigoDisciplina), ministrada pelo professor \nomeProfessorUm. às 3ªs e 5ªs feiras, das 19:00 às 20:30, no período \semestre\ de \ano para os cursos de Engenharia.
+
+A Disciplina \nomeDisciplina é uma matéria de \creditosDisciplina créditos optativa para os estudantes de graduação da Escola de Engenharia da UFMG. Essa disciplina tem como proposta \{descrever os objetivos da disciplina de forma sucinta\}.
+
+Já o objetivo da disciplina ``\nomeDisciplina'' é introduzir os fundamentos que permitam ao aluno adquirir o domínio básico da tecnologia de banco de dados, o objetivo deste estágio é contribuir positivamente com o fluxo da disciplina, assistir ao professor nas tarefas acordadas e, consequentemente, aprimorar o processo de aprendizado dos discentes.
+
+\section{Atividades Conduzidas} \label{sec:atividades}
+
+As seguintes atividades foram conduzidas pelo estagiário docente:
+
+\begin{enumerate}
+  \item \textbf{Elaborar Exercícios:} Trabalho Prático 1 ($TP_1$) sobre a linguagem SQL com correção automática via Moodle ($\sim$09/10/2025);
+  \item \textbf{Ministrar aulas}, sendo o conteúdo ``Álgebra Relacional'' nos dias 23/09 e 25/09 de 2025;
+  \item \textbf{Aplicar provas (caso necessário):} Dias 18/09/25, 23/10/25 e 13/11/25;
+  \item \textbf{Preparar material didático:} atualização parcial do material de aula para o formato Quarto ($\sim$06/11/2025);
+  \item \textbf{Oferecimento de monitorias}, sob demanda dos alunos a fim de sanar as dúvidas ($\sim$06/11/2025).
+\end{enumerate}
+
+\section{Resultados Obtidos} \label{sec:resultados}
+
+Quanto à \textbf{elaboração do $TP_1$}, foi criado um conjunto de 20 consultas SQL, sendo 10 consultas em álgebra relacional e 10 consultas em linguagem natural. O trabalho teve como intuito verificar o entendimento dos alunos sobre os conceitos básicos de SQL e álgebra relacional. Foi preparada a correção automática via Moodle utilizando o Virtual Programming Lab (VPL), que facilita a escalabilidade das correções. O $TP_1$ foi disponibilizado aos alunos do dia 16/10/2025 até o dia 30/10/2025. Este trabalho prático apresentou diversas complicações. A primeira se deu devido à limitação de armazenamento do banco de dados escolhido para a tarefa, visto que o VPL apenas permitia bancos de dados com até 20 Mb, o que provocou a necessidade de um \textit{undersampling} dos dados originais, consequentemente causando o segundo problema: a perda de referencialidade de parte dos dados; em terceiro: durante as \textbf{monitorias}, alguns alunos relataram dificuldades quanto à corretude das consultas enviadas, ao avaliá-las, percebeu-se reais incongruências no gabarito preparado inicialmente, o que levou a uma reformulação do gabarito e posterior reavaliação das consultas enviadas pelos alunos; em quarto: as notas automaticamente corrigidas pelo VPL apresentaram divergências em relação às notas geradas através das correções feitas localmente pelo estagiário, o que levou a uma revisão minuciosa das consultas e do gabarito, a fim de garantir a justiça na avaliação dos alunos. Essas dificuldades ressaltam a importância de um planejamento cuidadoso e testes rigorosos ao utilizar ferramentas automatizadas para avaliação acadêmica. Por fim, foi mantida a maior nota dentre as avaliações automáticas e manuais, garantindo justiça à compreensão e desempenho dos alunos.
+
+No que tange à \textbf{ministração de aulas}, o estagiário foi responsável por ministrar duas aulas sobre ``Álgebra Relacional'' nos dias 23/09/2025 e 25/09/2025. As aulas foram preparadas com antecedência, se baseando na tarefa de \textbf{preparar material didático}. Para tanto, foi utilizada a linguagem de marcação Quarto. Ambas as aulas foram bem recebidas pelos alunos, que demonstraram interesse e participaram ativamente das discussões. A primeira aula teve uma duração mais reduzida, tendo em torno de 50 minutos, enquanto a segunda aula teve uma duração de aproximadamente 90 minutos. A variação não aparentou ter impactado negativamente a compreensão dos alunos.
+
+Em relação à \textbf{aplicação das provas}, o estagiário auxiliou na logística de aplicação da $P_3$, que ocorreu no dia 13/11/2025. O estagiário esteve presente na sala de aula para distribuir e recolher as provas. Mantendo a integridade do processo de avaliação, garantindo que os alunos tivessem um ambiente adequado para a realização da prova.
+
+Retomando a \textbf{preparação do material didático}, o estagiário atualizou parte do material de aula para o formato Quarto, em especial os materiais das aulas ministradas. O material atualizado mirou facilitar a manutenção futura do material por parte do professor responsável. A escrita em Quarto apresentou consideráveis vantagens, porém apresentando também desvantagens. O potencial de poder textualmente elaborar o material, incluindo fórmulas matemáticas e códigos, é uma vantagem significativa que resulta em material formatado de forma consistente, viabilizando prático versionamento; por outro lado, a curva de aprendizado da ferramenta Quarto e a necessidade de programar certos elementos que de outro modo seriam mais simples de implementar em um editor de slides tradicional representam desvantagens notáveis.
+
+No que diz respeito ao \textbf{oferecimento de monitorias}, o estagiário esteve disponível para sanar dúvidas dos alunos através de agendamentos prévios feitos através de um link compartilhado com a turma. Ao todo foram realizadas 5 monitorias, cada uma com duração estimada de 30 minutos, porém usualmente se estendendo, chegando a durar próximo de 2 horas. As dúvidas mais frequentes envolveram esclarecimentos quanto a conteúdos dados em aula e também dúvidas relacionadas ao $TP_1$. A interação com os alunos durante as monitorias foi positiva, com os alunos demonstrando interesse em aprofundar seus conhecimentos sobre os temas abordados na disciplina. Esperava-se um número maior de solicitações de monitoria, sendo cogitado até a definição de horários fixos semanais para as monitorias, cogitação esta que foi considerada desnecessária por parte do professor responsável, visto que, caso necessário eles agendariam reuniões.
+
+\section{Autoavaliação} \label{sec:autoavaliacao}
+
+Ao longo do estágio docente, notei em primeira mão algumas complexidades que usualmente não são aparentes para aqueles que apenas assistem às aulas. Como eu tenho o desejo de seguir a carreira acadêmica e docente, considero muito valiosa essa experiência prática. A oportunidade de ministrar aulas me confirmou o quanto eu aprecio o ato de ensinar e compartilhar conhecimento, estando diante de uma turma atenta e interessada, o que tornou a experiência ainda mais gratificante. Além disso, a elaboração do $TP_1$ me fez ver a dificuldade que é confeccionar uma atividade avaliativa que seja justa, eficaz e que realmente avalie o aprendizado dos alunos, tarefa esta que exige um planejamento cuidadoso e atenção aos detalhes, e que certamente requereria maior antecedência no preparo para ser executada de forma ideal e sem erros no gabarito, apesar de que erros são sempre possíveis, mesmo com o maior cuidado. A experiência de oferecer monitorias também foi enriquecedora, pois me permitiu interagir diretamente com os alunos, entender suas dificuldades e ajudá-los a superar obstáculos no aprendizado. Inclusive um relato que me marcou foi o de um aluno que, após a aula, afirmou que apreciou muito a minha didática.
+
+\section{Sugestões para Futuras Ofertas da Disciplina}
+
+Sugiro que em ofertas futuras da disciplina, o material didático da oferta anterior já seja previamente disponibilizado aos alunos, permitindo que eles possam se familiarizar com o conteúdo antes do início das aulas, e que, caso haja atualização, essas sejam destacadas. Considero que as atribuições do estagiário docentes foram devidamente balanceadas e adequadas para um contexto de aprendizado, não havendo necessidade de alterações significativas. Uma tarefa que senti falta foi a participação na elaboração das provas e em sua correção, o que poderia proporcionar uma experiência ainda mais completa e enriquecedora, porém, considerando o equilíbrio previamente apontado, algumas das atividades propostas precisariam sair para que essa fosse incorporada. Sugiro também que o material didático da disciplina esteja armazenado de forma consolidada em repositório online, facilitando o acesso e a manutenção futura do conteúdo, tanto por parte do professor responsável quanto por futuros estagiários docentes, e potencialmente permitindo a colaboração entre diferentes estagiários e até mesmo alunos interessados.
+
+\end{document}
